@@ -16,8 +16,20 @@ export class RichTextExample extends Component {
     super(props);
     this.state = {title: "", content:""};
     this.getHTML = this.getHTML.bind(this);
-    this.setFocusHandlers = this.setFocusHandlers.bind(this);
+    this.setFocusHandlers = this.setFocusHandlers.bind(this);     
+    this.props.itemId = this.props.navigation.getParam('id', 'a description');
   }
+
+  static navigationOptions = {
+    title: 'Details',
+    headerStyle: {
+      backgroundColor: '#f4511e',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+  };
 
   onPress(){
     this.getHTML().then(() => {
@@ -28,12 +40,12 @@ export class RichTextExample extends Component {
 
   render() {
     return (
-        <View style = {styles.container}>
-         <View style = {{flex: 0.1, flexDirection: 'row', alignItems: 'flex-start'}}>
-           <RkButton rkType='backIcon'>back</RkButton>
-           <View style = {{flex: 4}}></View>
-           <RkButton rkType='saveIcon' onPress={ ()  => this.onPress()}>save</RkButton>
-         </View>
+       <View style = {styles.container}>
+        <View style = {{flex: 0.1, flexDirection: 'row', alignItems: 'flex-start'}}>
+            <RkButton rkType='backIcon'>back</RkButton>
+            <View style = {{flex: 4}}></View>
+            <RkButton rkType='saveIcon' onPress={ ()  => this.onPress()}>save</RkButton>
+          </View>
           <RichTextEditor
               ref={(r)=>this.richtext = r}
               style = {styles.richtext}
@@ -41,7 +53,7 @@ export class RichTextExample extends Component {
               initialContentHTML={'Hello <b>World</b> <p>this is a new paragraph</p> <p>this is another new paragraph</p>'}
               editorInitializedCallback={() => this.onEditorInitialized()}
           />
-          <RichTextToolbar
+          <RichTextToolbar  
             getEditor={() => this.richtext}
           />
           {Platform.OS === 'ios' && <KeyboardSpacer/>}
@@ -71,7 +83,7 @@ export class RichTextExample extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: 10,
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#ffffff',

@@ -19,24 +19,49 @@ const instructions = Platform.select({
 
 const db = SQLite.openDatabase('ria.db', '1.0', '', 1);
 
-type Props = {};
 export class YComponent extends Component<Props> {
-  _onPress() {
-    Alert.alert('haha');
+
+  componentDidMount() {
+    this.setState = {
+            data: [{id:3, book_description:"daf2"},{id:4, book_description:"dfe2"}],
+    };
   }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+          data: [{id:1,book_name:"daf"},{id:2,book_name:"dfe"}],
+    };
+  }
+
+  setDataState(items) {
+    this.setState = {
+        data: items,
+    }
+  }
+
+  _onPress() {
+    // Alert.alert('haha');
+    this.setState = {
+            data: [{id:3, book_description:"daf2"},{id:4, book_description:"dfe2"}],
+    };
+  }
+
+  _keyExtractor = (item, index) => item.id;
 
   rkCard = ({item}) => (
     <View style={{padding: 10}}>
       <RkCard rkType="shadowed">
         <View rkCardHeader>
-          <Text>Header</Text>
+          <Text>{item.book_name}</Text>
         </View>
         <View rkCardContent>
-          <Text>IMAGE</Text>
+          <Text>{item.book_description}</Text>
         </View>
         <View rkCardFooter>
-          <RkBadge title={item.key} />
+          <RkBadge title={item.book_reading_date} />
         </View>
+        <RkButton onPress={this._onPress}/>
       </RkCard>
     </View>
   );
@@ -44,11 +69,11 @@ export class YComponent extends Component<Props> {
   render() {
     return (
       <FlatList
-        data={[{key: 'a'}, {key: 'b'}]}
+        data= {this.state.data}
         renderItem = {({item}) => this.rkCard({item})}
+        extraData={this.state}
+        keyExtractor={this._keyExtractor}
       />
-
-     
     );
   }
 }
