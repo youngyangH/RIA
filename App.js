@@ -12,7 +12,6 @@ import {Platform, Text, View, StyleSheet} from 'react-native';
 
 import {DAO} from './dao/dao.js';
 import {YComponent} from './yComponent.js';
-import {FlatListDemo} from './demo/flatlistdemo.js'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import {RichTextExample} from './demo/richTextExample.js';
 import { ReadReport } from './demo/readReport.js';
@@ -26,7 +25,7 @@ const instructions = Platform.select({
 
 const AppNavigator = createStackNavigator({
     Main: {
-      screen: FlatListDemo
+      screen: ReadReport
     },
     Details: {
       screen: RichTextExample
@@ -39,10 +38,6 @@ DAO.init();
 const AppContainer = createAppContainer(AppNavigator);
 
 export default class App extends Component<Props> {
-
-  onPress() {
-      this.props.navigation.navigate('Details');  
-  }
 
   render() {
     return (

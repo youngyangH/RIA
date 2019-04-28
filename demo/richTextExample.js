@@ -9,15 +9,36 @@ import {
 import {RichTextEditor, RichTextToolbar} from 'react-native-zss-rich-text-editor';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import {RkButton, RkTheme} from 'react-native-ui-kitten';
+import {DAO, db} from './../dao/dao.js';
 
 export class RichTextExample extends Component {
+
+  componentDidMount() {
+    this.setState({ loading: true });
+    db.transaction((tx) => { 
+      tx.executeSql("select * from READING o where o.book_id = " + this.props.itemId, [],(tx,results)=> {
+        this.setState({data: this.state.data.concat(results.rows._array)});
+      });
+    }, (error)=>{ 
+      console.log(error); 
+    });
+    
+  }
 
   constructor(props) {
     super(props);
     this.state = {title: "", content:""};
     this.getHTML = this.getHTML.bind(this);
     this.setFocusHandlers = this.setFocusHandlers.bind(this);     
-    this.props.itemId = this.props.navigation.getParam('id', 'a description');
+    this.props.itemId = this.props.navigation.getParam('bookId', 'a description');
+    this.state = {
+      loading: false,
+      data: [],
+      page: 1,
+      seed: 1,
+      error: null,
+      refreshing: false
+    };
   }
 
   static navigationOptions = {
@@ -42,7 +63,6 @@ export class RichTextExample extends Component {
     return (
        <View style = {styles.container}>
         <View style = {{flex: 0.1, flexDirection: 'row', alignItems: 'flex-start'}}>
-            <RkButton rkType='backIcon'>back</RkButton>
             <View style = {{flex: 4}}></View>
             <RkButton rkType='saveIcon' onPress={ ()  => this.onPress()}>save</RkButton>
           </View>

@@ -22,35 +22,32 @@ const db = SQLite.openDatabase('ria.db', '1.0', '', 1);
 export class YComponent extends Component<Props> {
 
   componentDidMount() {
-    this.setState = {
-            data: [{id:3, book_description:"daf2"},{id:4, book_description:"dfe2"}],
-    };
+    this.setState({ loading: true });
+    db.transaction((tx) => { 
+      tx.executeSql("select * from BOOKS", [],(tx,results)=> {
+        this.setState({data: this.state.data.concat(results.rows._array)});
+      }); 
+    }, (error)=>{ 
+      console.log(error); 
+    });
+    
   }
 
   constructor(props) {
     super(props);
+    this.props.navigation = props.navigation;
     this.state = {
-          data: [{id:1,book_name:"daf"},{id:2,book_name:"dfe"}],
+      loading: false,
+      data: [],
+      page: 1,
+      seed: 1,
+      error: null,
+      refreshing: false
     };
   }
-
-  setDataState(items) {
-    this.setState = {
-        data: items,
-    }
-  }
-
-  _onPress() {
-    // Alert.alert('haha');
-    this.setState = {
-            data: [{id:3, book_description:"daf2"},{id:4, book_description:"dfe2"}],
-    };
-  }
-
-  _keyExtractor = (item, index) => item.id;
 
   rkCard = ({item}) => (
-    <View style={{padding: 10}}>
+    <View style={{padding: 10}} >
       <RkCard rkType="shadowed">
         <View rkCardHeader>
           <Text>{item.book_name}</Text>
@@ -61,7 +58,7 @@ export class YComponent extends Component<Props> {
         <View rkCardFooter>
           <RkBadge title={item.book_reading_date} />
         </View>
-        <RkButton onPress={this._onPress}/>
+        <RkButton onPress={() => this.props.navigateToDetailsPage({item})} />
       </RkCard>
     </View>
   );
@@ -72,7 +69,7 @@ export class YComponent extends Component<Props> {
         data= {this.state.data}
         renderItem = {({item}) => this.rkCard({item})}
         extraData={this.state}
-        keyExtractor={this._keyExtractor}
+        keyExtractor={item => item.id}
       />
     );
   }
