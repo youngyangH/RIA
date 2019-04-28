@@ -3,8 +3,8 @@ import SQLite from 'react-native-sqlite-2';
 export const db = SQLite.openDatabase('ria.db', '1.0', '', 1);
 
 export const DAO = {
-	 init : async function(){
-	   await db.transaction(function (txn) {
+	 init :  function(){
+	    	db.transaction(function (txn) {
 			  txn.executeSql('DROP TABLE IF EXISTS Users', []);
 			  txn.executeSql('CREATE TABLE IF NOT EXISTS Users(user_id INTEGER PRIMARY KEY NOT NULL, name VARCHAR(30))', []);
 			  txn.executeSql('INSERT INTO Users (name) VALUES (:name)', ['Young']);		  
@@ -16,8 +16,18 @@ export const DAO = {
 
 
 			  txn.executeSql('DROP TABLE IF EXISTS READING', []);
-			  txn.executeSql('CREATE TABLE IF NOT EXISTS READING(reading_id INTEGER PRIMARY KEY NOT NULL, reading_content TEXT, reading_start_date  DATE)', []);
-		});
+			  txn.executeSql('CREATE TABLE IF NOT EXISTS READING(reading_id INTEGER PRIMARY KEY NOT NULL,reading_title TEXT, reading_content TEXT, reading_start_date  DATE, book_id INTEGER)', []);
+			  // txn.executeSql("insert into READING(reading_title, reading_content, reading_start_date, book_id) VALUES (:reading_title, :reading_content, :reading_start_date, :book_id)",
+			  //  ['Title111!!','Hello <b>World</b> <p>this is a new paragraph</p> <p>this is another new paragraph</p>','2019-01-01', 1]);
+ 			 //  txn.executeSql("insert into READING(reading_title, reading_content, reading_start_date, book_id) VALUES (:reading_title, :reading_content, :reading_start_date, :book_id)",
+			  //  ['Title222!!','Hello <b>World</b> <p>this is a new paragraph</p> <p>this is another new paragraph</p>','2019-01-01', 2]);
+
+			  // txn.executeSql('SELECT * FROM READING', [], function (tx, res) {
+			  //   for (let i = 0; i < res.rows.length; ++i) {
+			  //     console.log('item:', res.rows.item(i));
+			  //   }
+			  // });
+		});	  
 	},
 
 	insert: function(tableName, cloumns, data) {

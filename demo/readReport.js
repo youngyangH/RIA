@@ -16,16 +16,6 @@ import {RichTextExample} from './richTextExample.js';
 
 export class ReadReport extends Component<Props> {
 
-  init() {
-    db.transaction((tx) => { 
-      tx.executeSql("select * from BOOKS", [],(tx,results)=> { 
-        this.refs.son.setDataState(results.rows);
-      }); 
-    }, (error)=>{ 
-      console.log(error); 
-    });
-  }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -48,9 +38,9 @@ export class ReadReport extends Component<Props> {
       this.props.navigation.navigate('Details');  
   }
 
-  navigateToDetailsPage(item) {
+  navigateToDetailsPage(data) {
       this.props.navigation.navigate('Details', {
-        bookId: item.book_id,
+        bookId: data.item.book_id,
       });
   }
 

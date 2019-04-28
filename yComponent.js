@@ -21,6 +21,10 @@ const db = SQLite.openDatabase('ria.db', '1.0', '', 1);
 
 export class YComponent extends Component<Props> {
 
+  getItemId() {
+    return this.props.navigation.getParam('bookId', 'a description');
+  }
+
   componentDidMount() {
     this.setState({ loading: true });
     db.transaction((tx) => { 
