@@ -1,0 +1,14 @@
+book:
+	id,
+	name,
+	readingDate,
+
+Reading I A:
+	id,
+	Content,
+	bookID, => book.id
+	createDate,
+	lastModifiedDate,
+
+
+

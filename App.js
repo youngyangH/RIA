@@ -15,6 +15,7 @@ import {YComponent} from './yComponent.js';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import {RichTextExample} from './demo/richTextExample.js';
 import { ReadReport } from './demo/readReport.js';
+import { Books} from './demo/books.js';
  
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -25,6 +26,9 @@ const instructions = Platform.select({
 
 const AppNavigator = createStackNavigator({
     Main: {
+      screen: Books
+    },
+    ReadReports: {
       screen: ReadReport
     },
     Details: {

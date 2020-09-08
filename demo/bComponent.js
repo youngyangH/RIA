@@ -19,12 +19,16 @@ const instructions = Platform.select({
 
 const db = SQLite.openDatabase('ria.db', '1.0', '', 1);
 
-export class YComponent extends Component<Props> {
+export class BComponent extends Component<Props> {
+
+  getItemId() {
+    return this.props.navigation.getParam('bookId', 'a description');
+  }
 
   componentDidMount() {
     this.setState({ loading: true });
     db.transaction((tx) => { 
-      tx.executeSql("select * from READING where book_id = " + this.props.bookId, [],(tx,results)=> {
+      tx.executeSql("select * from BOOKS", [],(tx,results)=> {
         this.setState({data: this.state.data.concat(results.rows._array)});
       }); 
     }, (error)=>{ 
@@ -49,13 +53,13 @@ export class YComponent extends Component<Props> {
     <View style={{padding: 10}} >
       <RkCard rkType="shadowed">
         <View rkCardHeader>
-          <Text>{item.reading_title}</Text>
+          <Text>{item.book_name}</Text>
         </View>
         <View rkCardContent>
           <Text>{item.book_description}</Text>
         </View>
         <View rkCardFooter>
-          <RkBadge title={item.reading_start_date} />
+          <RkBadge title={item.book_reading_date} />
         </View>
         <RkButton onPress={() => this.props.navigateToDetailsPage({item})} />
       </RkCard>

@@ -14,7 +14,7 @@ import {DAO, db} from './../dao/dao.js';
 export class RichTextExample extends Component {
 
   getItemId() {
-    return this.props.navigation.getParam('bookId', 'a description');
+    return this.props.navigation.getParam('readId', 'a description');
   }
 
   componentDidMount() {
@@ -24,7 +24,7 @@ export class RichTextExample extends Component {
   fetchData() {
     var itemId = this.getItemId();
     db.transaction((tx) => { 
-      tx.executeSql("select * from READING where book_id = " + itemId, [],(tx,results)=> {
+      tx.executeSql("select * from READING where reading_id = " + itemId, [],(tx,results)=> {
         if(results.rows._array.length > 0){
           this.setState({
             initialTitleHTML: results.rows._array[0].reading_title,

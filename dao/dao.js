@@ -17,16 +17,16 @@ export const DAO = {
 
 			  txn.executeSql('DROP TABLE IF EXISTS READING', []);
 			  txn.executeSql('CREATE TABLE IF NOT EXISTS READING(reading_id INTEGER PRIMARY KEY NOT NULL,reading_title TEXT, reading_content TEXT, reading_start_date  DATE, book_id INTEGER)', []);
-			  // txn.executeSql("insert into READING(reading_title, reading_content, reading_start_date, book_id) VALUES (:reading_title, :reading_content, :reading_start_date, :book_id)",
-			  //  ['Title111!!','Hello <b>World</b> <p>this is a new paragraph</p> <p>this is another new paragraph</p>','2019-01-01', 1]);
- 			 //  txn.executeSql("insert into READING(reading_title, reading_content, reading_start_date, book_id) VALUES (:reading_title, :reading_content, :reading_start_date, :book_id)",
-			  //  ['Title222!!','Hello <b>World</b> <p>this is a new paragraph</p> <p>this is another new paragraph</p>','2019-01-01', 2]);
+			  txn.executeSql("insert into READING(reading_title, reading_content, reading_start_date, book_id) VALUES (:reading_title, :reading_content, :reading_start_date, :book_id)",
+			   ['Title111!!','Hello <b>World</b> <p>this is a new paragraph</p> <p>this is another new paragraph</p>','2019-01-01', 1]);
+ 			  txn.executeSql("insert into READING(reading_title, reading_content, reading_start_date, book_id) VALUES (:reading_title, :reading_content, :reading_start_date, :book_id)",
+			   ['Title222!!','Hello <b>World</b> <p>this is a new paragraph</p> <p>this is another new paragraph</p>','2019-01-01', 1]);
 
-			  // txn.executeSql('SELECT * FROM READING', [], function (tx, res) {
-			  //   for (let i = 0; i < res.rows.length; ++i) {
-			  //     console.log('item:', res.rows.item(i));
-			  //   }
-			  // });
+			  txn.executeSql('SELECT * FROM READING', [], function (tx, res) {
+			    for (let i = 0; i < res.rows.length; ++i) {
+			      console.log('item:', res.rows.item(i));
+			    }
+			  });
 		});	  
 	},
 

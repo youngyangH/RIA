@@ -11,14 +11,10 @@ import React, {Component} from 'react';
 import {Platform, Text, View, StyleSheet} from 'react-native';
 
 import {DAO, db} from './../dao/dao.js';
-import {YComponent} from './../yComponent.js';
+import {BComponent} from './bComponent.js';
 import {RichTextExample} from './richTextExample.js';
 
-export class ReadReport extends Component<Props> {
-
-  getItemId() {
-    return this.props.navigation.getParam('bookId', 'a description');
-  }
+export class Books extends Component<Props> {
 
   constructor(props) {
     super(props);
@@ -28,7 +24,7 @@ export class ReadReport extends Component<Props> {
   }
 
   static navigationOptions = {
-    title: 'Reports',
+    title: 'Books',
     headerStyle: {
       backgroundColor: '#f4511e',
     },
@@ -39,12 +35,12 @@ export class ReadReport extends Component<Props> {
   };
 
   onPress() {
-      this.props.navigation.navigate('Details');  
+      this.props.navigation.navigate('ReadReports');  
   }
 
   navigateToDetailsPage(data) {
-      this.props.navigation.navigate('Details', {
-        readId: data.item.reading_id,
+      this.props.navigation.navigate('ReadReports', {
+        bookId: data.item.book_id,
       });
   }
 
@@ -57,7 +53,7 @@ export class ReadReport extends Component<Props> {
                <View style = {{flex: 4}}></View>
                <RkButton rkType='saveIcon' onPress={ ()  => this.onPress()}>add</RkButton>
              </View>
-             <YComponent ref="son" bookId={this.getItemId()} navigateToDetailsPage={this.navigateToDetailsPage.bind(this)} />
+             <BComponent ref="son" navigateToDetailsPage={this.navigateToDetailsPage.bind(this)} />
           </View>
        </RkTab>
        <RkTab title='Pretty Cool'>
